@@ -1,0 +1,68 @@
+=== [2019-01-09.02:10:13] check_changes
+=== [2019-01-09.02:10:54] Latest project num is hamilton%5941
+=== [2019-01-09.02:10:54] acme_checkout
+=== [2019-01-09.02:10:55] :START: acme_devline_tag
+=== [2019-01-09.02:12:17] :STATUS: acme_devline_tag 0
+=== [2019-01-09.02:12:17] Setting env build_db_id to 22178
+=== [2019-01-09.02:12:17] :END: acme_devline_tag 0
+=== [2019-01-09.02:12:17] Checking out source with acme nw -devline hamilton%REL_9_2_2_137
+=== [2019-01-09.02:12:17] Log goes to /auto/andprojects29/release//hamilton/nexus/logs/REL_9_2_2_137/acme_nw.log
+=== [2019-01-09.02:12:27] ACME Project
+=== [2019-01-09.02:12:27] :START: acme_devline_pull
+=== [2019-01-09.02:12:27] space at the moment is Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           600G     0  600G   0% /dev/shm
+=== [2019-01-09.02:36:36] :STATUS: acme_devline_pull 0
+=== [2019-01-09.02:36:36] :END: acme_devline_pull
+=== [2019-01-09.02:36:36] :START: set_srg_version
+=== [2019-01-09.02:36:36] Finished setting version 9.2(2.137) in SRG files
+=== [2019-01-09.02:36:36] :STATUS: set_srg_version 0
+=== [2019-01-09.02:36:36] :END: set_srg_version
+=== [2019-01-09.02:36:36] :START: update_cdets
+=== [2019-01-09.02:36:36] :START: sdk_build
+=== [2019-01-09.02:36:36] :START: commit_dme_generated_ids
+=== [2019-01-09.02:36:37] :STATUS: commit_dme_generated_ids 1
+=== [2019-01-09.02:36:37] :END: commit_dme_generated_ids
+=== [2019-01-09.02:36:39] :START: build_cscope
+=== [2019-01-09.02:38:10] Updating defects with Integrated Release version: 9.2(2.137) \n
+=== [2019-01-09.02:42:41] :STATUS: update_cdets 0
+=== [2019-01-09.02:42:41] :END: update_cdets
+=== [2019-01-09.02:42:41] :START: find_commits
+=== [2019-01-09.02:42:41] finding all commits done to this tree
+=== [2019-01-09.02:44:51] :STATUS: find_commits 0
+=== [2019-01-09.02:44:51] :END: find_commits
+=== [2019-01-09.02:45:39] :STATUS: build_cscope 1
+=== [2019-01-09.02:45:39] :END: build_cscope
+=== [2019-01-09.02:55:36] :STATUS: sdk_build 0
+=== [2019-01-09.02:55:36] :END: sdk_build
+=== [2019-01-09.02:55:41] :START: images/final/nxos_parallel
+=== [2019-01-09.02:55:41] :START: build_pkg_cache
+=== [2019-01-09.02:55:41] Building IMAGE: nxos_parallel
+=== [2019-01-09.02:55:49] :STATUS: build_pkg_cache 0
+=== [2019-01-09.02:55:49] :END: build_pkg_cache
+=== [2019-01-09.06:34:56] :START: save_image
+=== [2019-01-09.06:34:56] :STATUS: images/final/nxos_parallel 0
+=== [2019-01-09.06:34:56] :END: images/final/nxos_parallel
+=== [2019-01-09.06:34:56] :START: images/final/nxosv
+=== [2019-01-09.06:34:56] Building IMAGE: nxosv
+=== [2019-01-09.06:36:06] :STATUS: save_image 0
+=== [2019-01-09.06:36:06] :END: save_image
+=== [2019-01-09.06:49:03] :STATUS: images/final/nxosv 0
+=== [2019-01-09.06:49:03] :END: images/final/nxosv
+=== [2019-01-09.06:49:03] :START: images/final/mtx_oc_all_n9000
+=== [2019-01-09.06:49:03] Building IMAGE: mtx_oc_all_n9000
+=== [2019-01-09.07:24:16] :STATUS: images/final/mtx_oc_all_n9000 1
+=== [2019-01-09.07:24:16] :END: images/final/mtx_oc_all_n9000
+=== [2019-01-09.07:24:16] :START: create_flat_makefiles
+=== [2019-01-09.07:40:04] :STATUS: create_flat_makefiles 0
+=== [2019-01-09.07:40:04] :END: create_flat_makefiles
+=== [2019-01-09.07:40:08] :START: send_status_email
+=== [2019-01-09.07:40:12] :STATUS: send_status_email 0
+=== [2019-01-09.07:40:12] :END: send_status_email
+=== [2019-01-09.07:40:49] :START: copy_workspace
+=== [2019-01-09.09:00:22] :STATUS: copy_workspace 0
+=== [2019-01-09.09:00:24] :END: copy_workspace
+=== [2019-01-09.09:00:24] :START: post_build_activities
+=== [2019-01-09.09:36:39] :STATUS: post_build_activities 0
+=== [2019-01-09.09:36:39] :END: post_build_activities
+=== [2019-01-09.09:36:39] Daily Build for hamilton branch is Succcessful!
+ 

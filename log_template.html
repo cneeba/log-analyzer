@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+		<style>
+		#jobs {
+		  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		  border-collapse: collapse;
+		  width: 100%;
+		}
+
+		#jobs td, #jobs th {
+		  border: 1px solid #ddd;
+		  padding: 8px;
+		}
+
+		#jobs tr:nth-child(even){background-color: #f2f2f2;}
+
+		#jobs tr:hover {background-color: #ddd;}
+
+		#jobs th {
+		  padding-top: 12px;
+		  padding-bottom: 12px;
+		  text-align: left;
+		  background-color: #4CAF50;
+		  color: white;
+		}
+		</style>   	
+
+	    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	    <script type="text/javascript">
+	      google.charts.load('current', {'packages':['timeline']});
+	      google.charts.setOnLoadCallback(drawChart);
+	      function drawChart() {
+	        var container = document.getElementById('timeline');
+	        var chart = new google.visualization.Timeline(container);
+	        var dataTable = new google.visualization.DataTable();
+
+    		dataTable.addColumn({ type: 'string', id: 'Process' });
+	        dataTable.addColumn({ type: 'string', id: 'Name' });
+	        dataTable.addColumn({ type: 'date', id: 'Start' });
+	        dataTable.addColumn({ type: 'date', id: 'End' });
+	        dataTable.addRows([
+            {% for job_name, each_job in log_groupings.items() %}	        	
+	          [ '{{loop.index}}', '{{ each_job.name }}', new Date({{each_job.get_start_time_obj().year}}, {{each_job.get_start_time_obj().month}}, {{each_job.get_start_time_obj().day}}, {{each_job.get_start_time_obj().hour}}, {{each_job.get_start_time_obj().minute}}, {{each_job.get_start_time_obj().second}}), new Date({{each_job.get_end_time_obj().year}}, {{each_job.get_end_time_obj().month}}, {{each_job.get_end_time_obj().day}}, {{each_job.get_end_time_obj().hour}}, {{each_job.get_end_time_obj().minute}}, {{each_job.get_end_time_obj().second}}) ],
+            {% endfor %}
+            ]);
+
+		    var options = {
+		      colors: [
+            	{% for job_name, each_job in log_groupings.items() %}	
+            		{% if '0' == each_job.status %}        	
+                		'#2E8B57', 
+              		{% else %}
+			      		'#DE1738', 
+              		{% endif %} 
+            	{% endfor %}			      
+		      ],
+		    };            
+	        chart.draw(dataTable, options);
+	      }
+	    </script>		
+   </head>
+   <body>
+   	  <h1> Timeline View </h1>
+      <div id="timeline" style="height: 800px;"></div>  
+
+   	  <h1> Table View </h1>
+      <table id="jobs">
+        <thead>
+            <tr>
+               <th>Process</th>
+               <th>Start Time</th>
+               <th>End Time</th>
+               <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job_name, each_job in log_groupings.items() %}
+            <tr>
+               <td>{{ each_job.name }}</td>
+               <td>{{ each_job.start_time }}</td>
+               <td>{{ each_job.end_time }}</td>
+               <td>{{ each_job.status }}</td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>    
+   </body>
+</html>
