@@ -2,6 +2,7 @@ import re
 from jinja2 import Template
 import os
 import datetime
+import sys
 
 class Job():
 
@@ -72,7 +73,7 @@ def parse_file_content(content_of_log_file):
                     print("Start of the project is not present in the log file. Could not record status")
     return jobs_dict
 
-def create_html_file(jobs_dict):
+def create_html_file(jobs_dict, output_file):
 
     """
     Creates an output html file with graphical and tabular view.
@@ -84,12 +85,19 @@ def create_html_file(jobs_dict):
     with open(template_file_name) as html_src:
         html_template = html_src.read()
         template = Template(html_template)
-        output_file_name = ("output/log.html")
+        output_file_name = (output_file)
         with open(output_file_name, 'w') as output_file:
             output_file.write(template.render(log_groupings = jobs_dict))
 
 if __name__ == "__main__":
-    content_of_log_file  = read_file("input/log_file.txt")
+    if len(sys.argv) != 3:
+        input_file = "input/log_file.txt"
+        output_file = "output/log.html"
+        print("Did not receive input_file and output_file params. Using defaults ...")
+    else:
+        input_file = sys.argv[1]
+        output_file = sys.argv[2]
+    content_of_log_file  = read_file(input_file)
     jobs_dict = parse_file_content(content_of_log_file)
-    create_html_file(jobs_dict)
+    create_html_file(jobs_dict, output_file)
 
