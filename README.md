@@ -9,6 +9,6 @@ pip install -r requirements.txt
 ```
 ### Run
 ```
-python log_parsing.py 
+python log_parser.py 
 open output/log.html
 ```
