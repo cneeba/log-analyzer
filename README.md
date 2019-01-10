@@ -9,7 +9,7 @@ pip install -r requirements.txt
 ```
 ### Run
 ```
-python log_parser.py 
+python log_parsing.py 
 open output/log.html
 ```
 ### Run with params
