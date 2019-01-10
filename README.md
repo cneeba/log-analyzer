@@ -12,6 +12,11 @@ pip install -r requirements.txt
 python log_parser.py 
 open output/log.html
 ```
+### Run with params
+```
+python log_parser.py input/log_file.txt output/log2.html
+open output/log2.html
+```
 
 ## Functionality
 
