@@ -80,16 +80,16 @@ def create_html_file(jobs_dict):
     return: None
     """
 
-    template_file_name = ("log_template.html")
+    template_file_name = ("resources/log_template.html")
     with open(template_file_name) as html_src:
         html_template = html_src.read()
         template = Template(html_template)
-        output_file_name = ("log.html")
+        output_file_name = ("output/log.html")
         with open(output_file_name, 'w') as output_file:
             output_file.write(template.render(log_groupings = jobs_dict))
 
 if __name__ == "__main__":
-    content_of_log_file  = read_file("log_file.txt")
+    content_of_log_file  = read_file("input/log_file.txt")
     jobs_dict = parse_file_content(content_of_log_file)
     create_html_file(jobs_dict)
 
