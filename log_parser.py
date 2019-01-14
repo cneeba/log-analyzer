@@ -24,7 +24,7 @@ def insert_data_to_db(file_name, jobs_dict):
     for job_name in jobs_dict.keys():        
         job_details_list.append(jobs_dict[job_name].__dict__)
 
-    record["build_id"] = file_name
+    record["_id"] = file_name
     record["job_details"] = job_details_list
     mongo_collection.insert_one(record)
 

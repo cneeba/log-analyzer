@@ -22,7 +22,7 @@ def index():
     return 'Welcome to log-analyzer page'
 
 @app.route('/builds/<build_id>')
-def route(build_id):
+def builds(build_id):
     """
     This API gets the data stored in database . 
     param build_id: Key for the stored file name
