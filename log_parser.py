@@ -1,34 +1,32 @@
 import re
 from jinja2 import Template
 import os
-import datetime
 import sys
+import json 
+from job import Job
+from flask import Flask
+from pymongo import MongoClient
 
-class Job():
+class Mongodb:
+    def __init__(self, url):        
+        self.url = url
+        self.mgdb = self.get_Connect()
+    def get_Connect(self):
+        return MongoClient(self.url)
 
-    """
-    A class definition to hold all the information about a job.
 
-        name   : string
-            Name of the job.
-        start_time : string
-               When the job started
-              end_time : string
-               When the job finished
-        status: number
-            Status of the job. If it is 0 means success, all othe values means failure
+def insert_data_to_db(file_name, jobs_dict):
+    mongo_client =Mongodb("34.73.9.243:80")
+    mongo_db = mongo_client.mgdb['log_analyzer']
+    mongo_collection = mongo_db['analyzed_result']
+    s = []
+    record = {}
+    for job_name in jobs_dict.keys():        
+        s.append(jobs_dict[job_name].__dict__)
 
-    """
-    def __init__(self, name="", start_time=0, end_time=0, status=0):
-        self.name = name
-        self.start_time = start_time
-        self.end_time = end_time
-        self.status = status
-
-    def get_start_time_obj(self):
-        return datetime.datetime.strptime(self.start_time, '%Y-%m-%d.%H:%M:%S')
-    def get_end_time_obj(self):
-        return datetime.datetime.strptime(self.end_time, '%Y-%m-%d.%H:%M:%S')
+    record["file_id"] = file_name
+    record["job_details"] = s
+    mongo_collection.insert_one(record)
 
 def read_file(file_name):
 
@@ -99,5 +97,7 @@ if __name__ == "__main__":
         output_file = sys.argv[2]
     content_of_log_file  = read_file(input_file)
     jobs_dict = parse_file_content(content_of_log_file)
-    create_html_file(jobs_dict, output_file)
+    insert_data_to_db("input_file",jobs_dict)
+
+    # create_html_file(jobs_dict, output_file)
 
