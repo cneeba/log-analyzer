@@ -24,9 +24,11 @@ python -m flask run --port=50100
 ```
 ### Retrieve build details from db
 #### JSON format
-http://localhost:50100/builds/input_file
+http://localhost:50100/builds/<file_name>
+Example: http://localhost:50100/builds/test_log.txt
 #### HTML format
-http://localhost:50100/builds/input_file?format=html
+http://localhost:50100/builds/<file_name>?format=html
+Example: http://localhost:50100/builds/test_log.txt?format=html
 
 ## Functionality
 
