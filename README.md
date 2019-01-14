@@ -22,13 +22,15 @@ python log_parser.py input/log_file.txt
 export FLASK_APP=app/routes.py
 python -m flask run --port=50100
 ```
-### Retrieve build details from db
+### Retrieve build details from API server
 #### JSON format
 http://localhost:50100/builds/<file_name>
-Example: http://localhost:50100/builds/test_log.txt
+
+- Example: http://localhost:50100/builds/test_log.txt
 #### HTML format
 http://localhost:50100/builds/<file_name>?format=html
-Example: http://localhost:50100/builds/test_log.txt?format=html
+
+- Example: http://localhost:50100/builds/test_log.txt?format=html
 
 ## Functionality
 
