@@ -19,13 +19,13 @@ def insert_data_to_db(file_name, jobs_dict):
     mongo_client =Mongodb("34.73.9.243:80")
     mongo_db = mongo_client.mgdb['log_analyzer']
     mongo_collection = mongo_db['analyzed_result']
-    s = []
+    job_details_list = []
     record = {}
     for job_name in jobs_dict.keys():        
-        s.append(jobs_dict[job_name].__dict__)
+        job_details_list.append(jobs_dict[job_name].__dict__)
 
-    record["file_id"] = file_name
-    record["job_details"] = s
+    record["build_id"] = file_name
+    record["job_details"] = job_details_list
     mongo_collection.insert_one(record)
 
 def read_file(file_name):
@@ -71,33 +71,14 @@ def parse_file_content(content_of_log_file):
                     print("Start of the project is not present in the log file. Could not record status")
     return jobs_dict
 
-def create_html_file(jobs_dict, output_file):
-
-    """
-    Creates an output html file with graphical and tabular view.
-    param jobs_dict: a dictionary with build name as key , build details as values
-    return: None
-    """
-
-    template_file_name = ("resources/log_template.html")
-    with open(template_file_name) as html_src:
-        html_template = html_src.read()
-        template = Template(html_template)
-        output_file_name = (output_file)
-        with open(output_file_name, 'w') as output_file:
-            output_file.write(template.render(log_groupings = jobs_dict))
-
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 2:
         input_file = "input/log_file.txt"
-        output_file = "output/log.html"
-        print("Did not receive input_file and output_file params. Using defaults ...")
+        print("Did not receive input_file param. Using defaults ...")
     else:
         input_file = sys.argv[1]
-        output_file = sys.argv[2]
     content_of_log_file  = read_file(input_file)
     jobs_dict = parse_file_content(content_of_log_file)
-    insert_data_to_db("input_file",jobs_dict)
-
-    # create_html_file(jobs_dict, output_file)
+    insert_data_to_db("input_file", jobs_dict)
+    print("Log file was parsed and data was persisted")
 
