@@ -1,6 +1,7 @@
 import re
 from jinja2 import Template
 import os
+import ntpath
 import sys
 import json 
 from job import Job
@@ -79,6 +80,6 @@ if __name__ == "__main__":
         input_file = sys.argv[1]
     content_of_log_file  = read_file(input_file)
     jobs_dict = parse_file_content(content_of_log_file)
-    insert_data_to_db("input_file", jobs_dict)
+    insert_data_to_db(ntpath.basename(input_file), jobs_dict)
     print("Log file was parsed and data was persisted")
 
