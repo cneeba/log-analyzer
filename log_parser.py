@@ -1,34 +1,32 @@
 import re
 from jinja2 import Template
 import os
-import datetime
 import sys
+import json 
+from job import Job
+from flask import Flask
+from pymongo import MongoClient
 
-class Job():
+class Mongodb:
+    def __init__(self, url):        
+        self.url = url
+        self.mgdb = self.get_Connect()
+    def get_Connect(self):
+        return MongoClient(self.url)
 
-    """
-    A class definition to hold all the information about a job.
 
-        name   : string
-            Name of the job.
-        start_time : string
-               When the job started
-              end_time : string
-               When the job finished
-        status: number
-            Status of the job. If it is 0 means success, all othe values means failure
+def insert_data_to_db(file_name, jobs_dict):
+    mongo_client =Mongodb("34.73.9.243:80")
+    mongo_db = mongo_client.mgdb['log_analyzer']
+    mongo_collection = mongo_db['analyzed_result']
+    job_details_list = []
+    record = {}
+    for job_name in jobs_dict.keys():        
+        job_details_list.append(jobs_dict[job_name].__dict__)
 
-    """
-    def __init__(self, name="", start_time=0, end_time=0, status=0):
-        self.name = name
-        self.start_time = start_time
-        self.end_time = end_time
-        self.status = status
-
-    def get_start_time_obj(self):
-        return datetime.datetime.strptime(self.start_time, '%Y-%m-%d.%H:%M:%S')
-    def get_end_time_obj(self):
-        return datetime.datetime.strptime(self.end_time, '%Y-%m-%d.%H:%M:%S')
+    record["_id"] = file_name
+    record["job_details"] = job_details_list
+    mongo_collection.insert_one(record)
 
 def read_file(file_name):
 
@@ -73,31 +71,14 @@ def parse_file_content(content_of_log_file):
                     print("Start of the project is not present in the log file. Could not record status")
     return jobs_dict
 
-def create_html_file(jobs_dict, output_file):
-
-    """
-    Creates an output html file with graphical and tabular view.
-    param jobs_dict: a dictionary with build name as key , build details as values
-    return: None
-    """
-
-    template_file_name = ("resources/log_template.html")
-    with open(template_file_name) as html_src:
-        html_template = html_src.read()
-        template = Template(html_template)
-        output_file_name = (output_file)
-        with open(output_file_name, 'w') as output_file:
-            output_file.write(template.render(log_groupings = jobs_dict))
-
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 2:
         input_file = "input/log_file.txt"
-        output_file = "output/log.html"
-        print("Did not receive input_file and output_file params. Using defaults ...")
+        print("Did not receive input_file param. Using defaults ...")
     else:
         input_file = sys.argv[1]
-        output_file = sys.argv[2]
     content_of_log_file  = read_file(input_file)
     jobs_dict = parse_file_content(content_of_log_file)
-    create_html_file(jobs_dict, output_file)
+    insert_data_to_db("input_file", jobs_dict)
+    print("Log file was parsed and data was persisted")
 
